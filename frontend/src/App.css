@@ -1,0 +1,41 @@
+@import 'leaflet/dist/leaflet.css';
+.neon-border {
+  position: relative;
+  padding: 1rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.neon-border::before,
+.neon-border::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 8px;
+  z-index: -1;
+  animation: neonGlow 2s linear infinite;
+}
+
+.neon-border::before {
+  border: 2px solid rgba(0, 255, 255, 0.6);
+  filter: blur(5px);
+}
+
+.neon-border::after {
+  border: 2px solid rgba(255, 0, 255, 0.6);
+  filter: blur(8px);
+}
+
+@keyframes neonGlow {
+  0%, 100% {
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.5), 0 0 30px rgba(255, 0, 255, 0.3);
+  }
+  50% {
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.5), 0 0 40px rgba(0, 255, 255, 0.3);
+  }
+}
+
