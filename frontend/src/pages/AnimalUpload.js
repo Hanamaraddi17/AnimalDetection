@@ -47,7 +47,7 @@ function UploadAnimalData() {
 
             // Use environment variable for the backend URL
             const response = await axios.post(
-                `${process.env.REACT_APP_BACKEND_URL}data/upload`, // Dynamic URL based on environment variable
+                `https://animal-detection-backend.vercel.app/data/upload`, // Dynamic URL based on environment variable
                 formData,
                 {
                     headers: {
