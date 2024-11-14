@@ -3,7 +3,6 @@ import Navbar from '../components/Navbar';
 import { uploadAnimalImage } from '../services/api'; // Import the API function for uploading images
 
 function AnimalUpload() {
-function AnimalUpload() {
     const [file, setFile] = useState(null);
     const [animalName, setAnimalName] = useState('');
     const [location, setLocation] = useState('');
@@ -178,6 +177,4 @@ function AnimalUpload() {
         </>
     );
 }
-
-export default AnimalUpload;
 export default AnimalUpload;
