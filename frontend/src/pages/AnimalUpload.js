@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react';   
 import Navbar from '../components/Navbar';
-import { uploadAnimalImage } from '../services/api'; // Import the API function for uploading images
+import axios from 'axios';
 
-function AnimalUpload() {
+function UploadAnimalData() {
     const [file, setFile] = useState(null);
     const [animalName, setAnimalName] = useState('');
     const [location, setLocation] = useState('');
@@ -45,11 +45,20 @@ function AnimalUpload() {
                 return;
             }
 
-            const response = await uploadAnimalImage(formData, token); // Use the imported API function
+            // Use environment variable for the backend URL
+            const response = await axios.post(
+                `${process.env.REACT_APP_BACKEND_URL}data/upload`, // Dynamic URL based on environment variable
+                formData,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            );
 
-            console.log('Animal uploaded:', response.data);
+            console.log('Animal data uploaded:', response.data);
 
-            // Clear form fields after successful upload
             setAnimalName('');
             setLocation('');
             setTime('');
@@ -103,7 +112,7 @@ function AnimalUpload() {
                                     type="text"
                                     value={location}
                                     onChange={(e) => setLocation(e.target.value)}
-                                    className="w-full  mt-2 p-2 text-sm rounded-lg border-2 border-gray-300 bg-transparent"
+                                    className="w-full mt-2 p-2 text-sm rounded-lg border-2 border-gray-300 bg-transparent"
                                     required
                                 />
                             </div>
@@ -142,7 +151,7 @@ function AnimalUpload() {
                             </div>
 
                             <div>
-                                <label className="text-sm font-semibold">add image</label>
+                                <label className="text-sm font-semibold">Animal Image</label>
                                 <input
                                     type="file"
                                     onChange={handleFileChange}
@@ -156,7 +165,7 @@ function AnimalUpload() {
                             )}
 
                             {success && (
-                                <div className="text-green-500 text-xs">Animal uploaded successfully!</div>
+                                <div className="text-green-500 text-xs">Animal data uploaded successfully!</div>
                             )}
 
                             <div className="flex justify-center gap-4">
@@ -166,10 +175,10 @@ function AnimalUpload() {
                                     disabled={uploading}
                                 >
                                     <span className="w-full relative px-4 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
-                                        {uploading ? 'Uploading...' : 'Upload Animal data'}
+                                        {uploading ? 'Uploading...' : 'Upload Animal Data'}
                                     </span>
                                 </button>
-                            </div>
+                            </div> 
                         </form>
                     </div>
                 </div>
@@ -177,4 +186,5 @@ function AnimalUpload() {
         </>
     );
 }
-export default AnimalUpload;
+
+export default UploadAnimalData;
