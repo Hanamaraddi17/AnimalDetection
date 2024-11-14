@@ -37,8 +37,8 @@ function Home() {
                             </Link>
 
                             <Link to="/register">
-                                <button className="relative inline-flex items-center justify-center p-0.5 mb-2 sm:mb-0 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-400 to-yellow-500 group-hover:from-red-400 group-hover:to-yellow-600 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400">
-                                    <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                                <button className="w-full sm:w-auto relative inline-flex items-center justify-center p-0.5 mb-2 sm:mb-0 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-400 to-yellow-500 group-hover:from-red-400 group-hover:to-yellow-600 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400">
+                                    <span className="w-full relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
                                         Register
                                     </span>
                                 </button>
