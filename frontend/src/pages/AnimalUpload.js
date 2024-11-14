@@ -46,7 +46,7 @@ function AnimalUpload() {
             }
 
             const response = await axios.post(
-                `${process.env.REACT_APP_BACKEND_URL}/data/upload`,
+                `${process.env.REACT_APP_BACKEND_URL}data/upload`,
                 formData,
                 {
                     headers: {
