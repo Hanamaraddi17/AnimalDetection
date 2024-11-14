@@ -1,13 +1,10 @@
+const { put } = require('@vercel/blob');
 const AnimalImage = require('../models/AnimalImage');
 
 // Function to upload animal image with latitude and longitude
 exports.uploadAnimalImage = async (req, res) => {
     try {
-
-
         const { animalName, time, latitude, longitude } = req.body;
-
-
 
         // Validate required fields
         if (!animalName || !time || !latitude || !longitude || !req.file) {
@@ -22,25 +19,30 @@ exports.uploadAnimalImage = async (req, res) => {
             return res.status(400).json({ message: 'Latitude and Longitude must be valid numbers' });
         }
 
+        // Upload the image to Vercel Blob Storage
+        const blob = await put(req.file.originalname, req.file.buffer, {
+            access: 'public',
+            headers: {
+                'Content-Type': req.file.mimetype,
+            },
+        });
+
         // Create and save the new animal image document in the database
         const animalImage = new AnimalImage({
-            image: `http://localhost:5000/uploads/${req.file.filename}`,
+            image: blob.url, // Store the URL of the uploaded image
             animalName,
             time,
             location: {
                 latitude: parsedLatitude,
-                longitude: parsedLongitude
+                longitude: parsedLongitude,
             },
-            user: req.user.id
+            user: req.user.id,
         });
 
         await animalImage.save();
 
         res.status(201).json({ message: 'Image and location data uploaded successfully', animalImage });
     } catch (error) {
-        if (error.message === 'Only JPEG, PNG, and GIF formats are allowed') {
-            return res.status(400).json({ message: error.message });
-        }
         console.error('Error uploading animal image:', error);
         res.status(500).json({ message: 'Something went wrong, please try again' });
     }
