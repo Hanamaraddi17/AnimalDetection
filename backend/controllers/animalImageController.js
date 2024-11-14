@@ -1,5 +1,5 @@
 const { put } = require('@vercel/blob');
-const AnimalImage = require('../models/AnimalImage');
+const AnimalImage = require('../models/animalImage');
 
 // Function to upload animal image with latitude and longitude
 exports.uploadAnimalImage = async (req, res) => {
