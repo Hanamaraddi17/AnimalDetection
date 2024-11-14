@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import axios from 'axios';
 
-function UploadArtwork() {
+function AnimalUpload() {
     const [file, setFile] = useState(null);
     const [animalName, setAnimalName] = useState('');
     const [location, setLocation] = useState('');
@@ -46,7 +46,7 @@ function UploadArtwork() {
             }
 
             const response = await axios.post(
-                'http://localhost:5000/data/upload',
+                `${process.env.REACT_APP_BACKEND_URL}/data/upload`,
                 formData,
                 {
                     headers: {
@@ -186,4 +186,4 @@ function UploadArtwork() {
     );
 }
 
-export default UploadArtwork;
+export default AnimalUpload;
