@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';    
+import React, { useEffect, useState } from 'react';     
 import Navbar from '../components/Navbar';
-import axios from 'axios';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import { fetchAnimalImages } from '../services/api';  // Import the API function
+import axios from 'axios';
 
 // Fix for Leaflet default marker icons
 delete L.Icon.Default.prototype._getIconUrl;
@@ -67,9 +68,7 @@ function Dashboard() {
             }
 
             try {
-                const response = await axios.get('http://localhost:5000/data/', {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
+                const response = await fetchAnimalImages(token);  // Use the new API function
                 setImages(response.data);
                 setFilteredImages(response.data);
 

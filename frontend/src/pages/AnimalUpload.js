@@ -1,8 +1,8 @@
-import React, { useState } from 'react'; 
+import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
-import axios from 'axios';
+import { uploadAnimalImage } from '../services/api'; // Import the API function for uploading images
 
-function UploadArtwork() {
+function AnimalUpload() {
     const [file, setFile] = useState(null);
     const [animalName, setAnimalName] = useState('');
     const [location, setLocation] = useState('');
@@ -45,19 +45,11 @@ function UploadArtwork() {
                 return;
             }
 
-            const response = await axios.post(
-                'http://localhost:5000/data/upload',
-                formData,
-                {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'multipart/form-data',
-                    },
-                }
-            );
+            const response = await uploadAnimalImage(formData, token); // Use the imported API function
 
-            console.log('Artwork uploaded:', response.data);
+            console.log('Animal uploaded:', response.data);
 
+            // Clear form fields after successful upload
             setAnimalName('');
             setLocation('');
             setTime('');
@@ -67,10 +59,10 @@ function UploadArtwork() {
             setSuccess(true);
 
         } catch (error) {
-            console.error('Error uploading artwork:', error);
+            console.error('Error uploading animal data:', error);
 
             if (error.response) {
-                setError(error.response.data.message || 'Failed to upload artwork. Please try again.');
+                setError(error.response.data.message || 'Failed to upload animal data. Please try again.');
             } else if (error.request) {
                 setError('Network error. Please check your connection and try again.');
             } else {
@@ -90,7 +82,7 @@ function UploadArtwork() {
                 <div className="relative flex flex-col items-center justify-center h-full p-6 text-white">
                     <div className="w-full max-w-xs z-10">
                         <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-teal-300 via-blue-100 to-purple-200 bg-clip-text text-transparent mb-4">
-                            Upload Animal Artwork
+                            Upload Animal Data
                         </h1>
 
                         <form onSubmit={handleSubmit} className="space-y-2">
@@ -150,7 +142,7 @@ function UploadArtwork() {
                             </div>
 
                             <div>
-                                <label className="text-sm font-semibold">Artwork Image</label>
+                                <label className="text-sm font-semibold">add image</label>
                                 <input
                                     type="file"
                                     onChange={handleFileChange}
@@ -164,7 +156,7 @@ function UploadArtwork() {
                             )}
 
                             {success && (
-                                <div className="text-green-500 text-xs">Artwork uploaded successfully!</div>
+                                <div className="text-green-500 text-xs">Animal uploaded successfully!</div>
                             )}
 
                             <div className="flex justify-center gap-4">
@@ -174,10 +166,10 @@ function UploadArtwork() {
                                     disabled={uploading}
                                 >
                                     <span className="w-full relative px-4 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
-                                        {uploading ? 'Uploading...' : 'Upload Artwork'}
+                                        {uploading ? 'Uploading...' : 'Upload Animal data'}
                                     </span>
                                 </button>
-                            </div> 
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -186,4 +178,4 @@ function UploadArtwork() {
     );
 }
 
-export default UploadArtwork;
+export default AnimalUpload;
