@@ -8,9 +8,22 @@ require('dotenv').config();
 
 const app = express();
 
-// CORS Configuration
+// CORS Configuration for multiple origins
 const corsOptions = {
-  origin: 'https://animaldetection.vercel.app', // Frontend URL
+  origin: function (origin, callback) {
+    const allowedOrigins = [
+      `${process.env.Front_end_CROS}`||"https://animaldetection.vercel.app",  // Production URL
+      'http://localhost:3000',              // Localhost URL
+      'http://localhost:5000',              // Another possible local dev URL
+      // Add other frontend URLs here as needed
+    ];
+
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true); // Allow the request
+    } else {
+      callback(new Error('Not allowed by CORS')); // Reject the request
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 };
