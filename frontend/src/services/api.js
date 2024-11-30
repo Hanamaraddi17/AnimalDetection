@@ -13,6 +13,20 @@ export const uploadAnimalImage = (formData, token) => API.post('/data/upload', f
 });
 
 // Updated function for fetching animal images to the new endpoint
-export const fetchAnimalImages = (token) => API.get('/data/', { // Assuming this endpoint is for fetching images
+export const fetchAnimalImages = (token) => API.get('/data/', {
     headers: { Authorization: token },
 });
+
+export const deleteAnimalImage = async (imageId) => {
+    const token = localStorage.getItem('token');
+    
+    try {
+        const response = await API.delete(`/data/delete/${imageId}`, {
+            headers: { Authorization: token }, // Ensure token is prefixed with "Bearer"
+        });
+        return response;
+    } catch (error) {
+        console.error('Error deleting image:', error);
+        throw new Error('Failed to delete image');
+    }
+};

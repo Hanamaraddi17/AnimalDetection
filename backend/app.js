@@ -12,7 +12,7 @@ const app = express();
 const corsOptions = {
   origin: function (origin, callback) {
     const allowedOrigins = [
-      `${process.env.Front_end_CROS}`||"https://animaldetection.vercel.app",  // Production URL
+      `${process.env.Front_end_CROS}`,
       'http://localhost:3000',              // Localhost URL
       'http://localhost:5000',              // Another possible local dev URL
       // Add other frontend URLs here as needed

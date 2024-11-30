@@ -1,4 +1,4 @@
-const { put } = require('@vercel/blob');
+const { put } = require('@vercel/blob'); 
 const AnimalImage = require('../models/animalImage');
 
 // Function to upload animal image with latitude and longitude
@@ -55,6 +55,33 @@ exports.getAnimalImages = async (req, res) => {
         res.json(images);
     } catch (error) {
         console.error('Error fetching animal images:', error);
+        res.status(500).json({ message: 'Something went wrong, please try again' });
+    }
+};
+
+// Delete an animal image by ID
+exports.deleteImage = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // Find the image by ID
+        const image = await AnimalImage.findById(id);
+
+        if (!image) {
+            return res.status(404).json({ message: 'Image not found' });
+        }
+
+        // Verify ownership of the image
+        if (image.user.toString() !== req.user.id) {
+            return res.status(403).json({ message: 'You are not authorized to delete this image' });
+        }
+
+        // Delete the image document
+        await image.deleteOne();
+
+        res.status(200).json({ message: 'Image deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting animal image:', error);
         res.status(500).json({ message: 'Something went wrong, please try again' });
     }
 };
